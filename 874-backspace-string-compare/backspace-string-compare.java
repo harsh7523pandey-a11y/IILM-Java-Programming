@@ -1,52 +1,27 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
-        int i = s.length() - 1;
-        int j = t.length() - 1;
 
-        int skipS = 0;
-        int skipT = 0;
+        StringBuilder a = new StringBuilder();
+        StringBuilder b = new StringBuilder();
 
-        while (i >= 0 || j >= 0) {
-
-            // Find the next valid character in s
-            while (i >= 0) {
-                if (s.charAt(i) == '#') {
-                    skipS++;
-                    i--;
-                } else if (skipS > 0) {
-                    skipS--;
-                    i--;
-                } else {
-                    break;
-                }
+        for (char ch : s.toCharArray()) {
+            if (ch == '#') {
+                if (a.length() > 0)
+                    a.deleteCharAt(a.length() - 1);
+            } else {
+                a.append(ch);
             }
-
-            // Find the next valid character in t
-            while (j >= 0) {
-                if (t.charAt(j) == '#') {
-                    skipT++;
-                    j--;
-                } else if (skipT > 0) {
-                    skipT--;
-                    j--;
-                } else {
-                    break;
-                }
-            }
-
-            // Compare valid characters
-            if (i >= 0 && j >= 0) {
-                if (s.charAt(i) != t.charAt(j)) {
-                    return false;
-                }
-            } else if (i >= 0 || j >= 0) {
-                return false;
-            }
-
-            i--;
-            j--;
         }
 
-        return true;
+        for (char ch : t.toCharArray()) {
+            if (ch == '#') {
+                if (b.length() > 0)
+                    b.deleteCharAt(b.length() - 1);
+            } else {
+                b.append(ch);
+            }
+        }
+
+        return a.toString().equals(b.toString());
     }
 }
